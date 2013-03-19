@@ -49,7 +49,7 @@ public class CreateDataFiles {
 	
 	public static void createDates(Collection<Ad> ads) {
 		try {
-			FileOutputStream fos = new FileOutputStream("pdate.txt");
+			FileOutputStream fos = new FileOutputStream("pdates.txt");
 			OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
 			
 			int i = 0;
