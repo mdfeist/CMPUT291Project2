@@ -1,0 +1,1 @@
+awk -F: '{print $1; print $2}' < ads.txt | db_load -T -t hash ad.idx
