@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.HashMap;
 
 import javax.xml.parsers.SAXParser;
@@ -7,13 +8,12 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
 public class XMLParser {
 	private HashMap<Integer, Ad> adArray;
 	
 	XMLParser(String filename)
 	{
-		adArray = new HashMap<Integer, Ad>(100);
+		adArray = new HashMap<Integer, Ad>(1000);
 
 		try {
 
@@ -126,6 +126,11 @@ public class XMLParser {
 		}
 		
 		return ad;
+	}
+	
+	public Collection<Ad> getAds()
+	{
+		return adArray.values();
 	}
 	
 	public void printFile()
