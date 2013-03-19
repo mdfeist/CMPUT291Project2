@@ -114,6 +114,20 @@ public class XMLParser {
 		}
 	}
 	
+	public Ad getAdWithId(int id)
+	{
+		Ad ad = null;
+		
+		try {
+			Integer i_id = new Integer(id);
+			ad = adArray.get(i_id);
+		} catch (Exception e) {
+			System.out.println("Error: invalid id");
+		}
+		
+		return ad;
+	}
+	
 	public void printFile()
 	{
 		for (Ad ad : adArray.values())
