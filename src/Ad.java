@@ -6,7 +6,14 @@ public class Ad {
 	private int price;
 	private String pdate;
 	
-	public Ad() {}
+	public Ad() 
+	{
+		this.id = -1;
+		this.title = "";
+		this.body = "";
+		this.price = -1;
+		this.pdate = "";
+	}
 	
 	public Ad(int id,
 			String title,

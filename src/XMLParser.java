@@ -60,6 +60,14 @@ public class XMLParser {
 						adArray.put(new Integer(adObject.getId()), adObject);
 						adObject = null;
 					}
+					
+					if (qName.equalsIgnoreCase("body")) {
+						body = false;
+					}
+					
+					if (qName.equalsIgnoreCase("title")) {
+						title = false;
+					}
 				}
 
 				public void characters(char ch[], int start, int length)
@@ -76,13 +84,16 @@ public class XMLParser {
 					}
 					
 					if (title) {
-						adObject.setTitle(new String(ch, start, length));
-						title = false;
+						String s_title = adObject.getTitle();
+						s_title += new String(ch, start, length);
+						adObject.setTitle(s_title);
 					}
 					
 					if (body) {
-						adObject.setBody(new String(ch, start, length));
-						body = false;
+						String s_body = adObject.getBody();
+						s_body += new String(ch, start, length);
+						
+						adObject.setBody(s_body);
 					}
 					
 					if (price) {
@@ -92,7 +103,7 @@ public class XMLParser {
 							Integer i_price = new Integer(s_price);
 							adObject.setPrice(i_price.intValue());
 						} catch (Exception e) {
-							adObject.setPrice(0);
+							adObject.setPrice(-1);
 						}
 						
 						price = false;

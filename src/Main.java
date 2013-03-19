@@ -4,7 +4,10 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		XMLParser xml = new XMLParser("Data10.xml");
-		xml.printFile();
+		CreateDataFiles.createTerms(xml.getAds());
+		CreateDataFiles.createDates(xml.getAds());
+		CreateDataFiles.createPrices(xml.getAds());
+		CreateDataFiles.createAds(xml.getAds());
 	}
 
 }
