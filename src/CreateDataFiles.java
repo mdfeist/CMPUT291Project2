@@ -7,7 +7,7 @@ public class CreateDataFiles {
 
 	public static void createTerms(Collection<Ad> ads) {
 		try {
-			FileOutputStream fos = new FileOutputStream("terms.txt");
+			FileOutputStream fos = new FileOutputStream("data/terms.txt");
 			OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
 			
 			for (Ad ad : ads) {
@@ -49,17 +49,11 @@ public class CreateDataFiles {
 	
 	public static void createDates(Collection<Ad> ads) {
 		try {
-			FileOutputStream fos = new FileOutputStream("pdates.txt");
+			FileOutputStream fos = new FileOutputStream("data/pdates.txt");
 			OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
 			
-			int i = 0;
 			for (Ad ad : ads) {
-				out.write(ad.getDate() + ":" + ad.getId());
-				
-				if (i < ads.size() - 1)
-					out.write("\n");
-				
-				i++;
+				out.write(ad.getDate() + ":" + ad.getId() + "\n");
 			}
 			out.close();
 		} catch (IOException e) {
@@ -69,7 +63,7 @@ public class CreateDataFiles {
 	
 	public static void createPrices(Collection<Ad> ads) {
 		try {
-			FileOutputStream fos = new FileOutputStream("prices.txt");
+			FileOutputStream fos = new FileOutputStream("data/prices.txt");
 			OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
 			
 			for (Ad ad : ads) {
@@ -88,10 +82,9 @@ public class CreateDataFiles {
 	
 	public static void createAds(Collection<Ad> ads) {
 		try {
-			FileOutputStream fos = new FileOutputStream("ads.txt");
+			FileOutputStream fos = new FileOutputStream("data/ads.txt");
 			OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
 			
-			int i = 0;
 			for (Ad ad : ads) {
 				int id = ad.getId();
 				String title = ad.getTitle();
@@ -111,12 +104,7 @@ public class CreateDataFiles {
 				out.write("</price>");
 	
 				out.write("<pdate>" + date + "</pdate>" +
-							"</ad>");
-				
-				if (i < ads.size() - 1)
-					out.write("\n");
-				
-				i++;
+							"</ad>\n");
 			}
 			out.close();
 		} catch (IOException e) {
