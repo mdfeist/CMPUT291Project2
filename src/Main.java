@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.util.Date;
 
+import com.sleepycat.db.Database;
+
 public class Main {
 	/**
 	 * @param args
@@ -70,7 +72,9 @@ public class Main {
 		}
 		
 		// Tests
-		DatabaseManager.getInstance().test();
+		//DatabaseManager.getInstance().test();
+		Database terms = DatabaseManager.getInstance().getTerms();
+		DatabaseManager.getInstance().get(terms, "b-with");
 		
 		// End Time
 		long lEndTime = new Date().getTime();

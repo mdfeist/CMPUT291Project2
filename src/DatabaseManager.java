@@ -50,7 +50,41 @@ public class DatabaseManager {
 		
 		return std_db;
 	}
+	
+	public Database getTerms()
+	{
+		return terms;
+	}
 
+	public void get(Database db, String search)
+	{
+		try {
+			// DatabaseEntry key,data;
+			DatabaseEntry key = new DatabaseEntry(search.getBytes("UTF-8"));
+			DatabaseEntry data = new DatabaseEntry();
+			
+			Cursor std_cursor = db.openCursor(null, null);
+			
+			OperationStatus retVal = std_cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
+			
+			// Count the number of duplicates. If the count is greater than 1, 
+		    // print the duplicates.
+		    if (std_cursor.count() >= 1) {
+		        while (retVal == OperationStatus.SUCCESS) {
+		            String keyString = new String(key.getData());
+		            String dataString = new String(data.getData());
+		            System.out.println("Key | Data : " +  keyString + " | " + dataString + "");
+		   
+		            retVal = std_cursor.getNextDup(key, data, LockMode.DEFAULT);
+		        }
+		    }
+			std_cursor.close();
+
+		} catch (Exception ex) {
+			ex.getMessage();
+		}
+	}
+	
 	public void test()
 	{
 		testDB(terms);
