@@ -70,7 +70,7 @@ public class CreateDataFiles {
 				int price = ad.getPrice();
 				
 				if (price >= 0) {
-					out.write(price + ":" + ad.getId() + "\0\n");
+					out.write(String.format("%09d", price) + ":" + ad.getId() + "\0\n");
 				}
 			}
 			out.close();

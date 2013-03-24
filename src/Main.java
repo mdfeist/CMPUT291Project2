@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.util.Date;
 
-import com.sleepycat.db.Database;
 
 public class Main {
 	/**
@@ -16,7 +15,7 @@ public class Main {
 		long lStartTime = new Date().getTime();
 
 		// Parse XML file
-		XMLParser xml = new XMLParser("Data1k.xml");
+		XMLParser xml = new XMLParser("Data10.xml");
 
 		// Clean Files
 		try {
@@ -56,8 +55,18 @@ public class Main {
 		
 		// Tests
 		//DatabaseManager.getInstance().test();
-		Database terms = DatabaseManager.getInstance().getTerms();
-		DatabaseManager.getInstance().get(terms, "b-with");
+		System.out.println("\nSearch apart% in terms");
+		DatabaseManager.getInstance().getTermsBoth("apart%");
+		System.out.println("\nSearch 2012/06/24 in pdates");
+		DatabaseManager.getInstance().getDate("2012/06/24");
+		System.out.println("\nSearch since 2012/06/24 in pdates");
+		DatabaseManager.getInstance().getDatesFrom("2012/06/24");
+		System.out.println("\nSearch until 2012/06/24 in pdates");
+		DatabaseManager.getInstance().getDatesTo("2012/06/24");
+		System.out.println("\nSearch price < 14900");
+		DatabaseManager.getInstance().getPrices(14900, false);
+		System.out.println("\nSearch price > 14900");
+		DatabaseManager.getInstance().getPrices(14900, true);
 		
 		// End Time
 		long lEndTime = new Date().getTime();
