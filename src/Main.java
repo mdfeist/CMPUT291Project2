@@ -16,7 +16,7 @@ public class Main {
 		long lStartTime = new Date().getTime();
 
 		// Parse XML file
-		XMLParser xml = new XMLParser("Data10.xml");
+		XMLParser xml = new XMLParser("Data1k.xml");
 
 		// Clean Files
 		try {
@@ -42,23 +42,6 @@ public class Main {
 		
 		// Sort Files and Build Indexes
 		try {
-			// Sort
-			process = Runtime.getRuntime().exec("sort -k2 -t- data/terms.txt -o data/terms.txt");
-			exitCode = process.waitFor();
-			System.out.println("Process terms.txt returned: " + exitCode);
-			
-			process = Runtime.getRuntime().exec("sort -t: data/pdates.txt -o data/pdates.txt");
-			exitCode = process.waitFor();
-			System.out.println("Process pdates.txt returned: " + exitCode);
-			
-			process = Runtime.getRuntime().exec("sort -n -t: data/prices.txt -o data/prices.txt");
-			exitCode = process.waitFor();
-			System.out.println("Process prices.txt returned: " + exitCode);
-			
-			process = Runtime.getRuntime().exec("sort -n -t: data/ads.txt -o data/ads.txt");
-			exitCode = process.waitFor();
-			System.out.println("Process ads.txt returned: " + exitCode);
-			
 			// Build Index Files
 			process = Runtime.getRuntime().exec("sh BuildIndex.sh");
 			exitCode = process.waitFor();

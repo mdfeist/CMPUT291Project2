@@ -31,13 +31,13 @@ public class CreateDataFiles {
 				
 				for (String t : titles) {
 					if (t.length() > 2) {
-						out.write("t-" + t + ":" + ad.getId() + "\n");
+						out.write("t-" + t + ":" + ad.getId() + "\0\n");
 					}
 				}
 				
 				for (String b : bodies) {
 					if (b.length() > 2) {
-						out.write("b-" + b + ":" + ad.getId() + "\n");
+						out.write("b-" + b + ":" + ad.getId() + "\0\n");
 					}
 				}
 			}
@@ -53,7 +53,7 @@ public class CreateDataFiles {
 			OutputStreamWriter out = new OutputStreamWriter(fos, "UTF-8");
 			
 			for (Ad ad : ads) {
-				out.write(ad.getDate() + ":" + ad.getId() + "\n");
+				out.write(ad.getDate() + ":" + ad.getId() + "\0\n");
 			}
 			out.close();
 		} catch (IOException e) {
@@ -70,8 +70,7 @@ public class CreateDataFiles {
 				int price = ad.getPrice();
 				
 				if (price >= 0) {
-					out.write(price + ":" + ad.getId());
-					out.write("\n");
+					out.write(price + ":" + ad.getId() + "\0\n");
 				}
 			}
 			out.close();
@@ -104,7 +103,7 @@ public class CreateDataFiles {
 				out.write("</price>");
 	
 				out.write("<pdate>" + date + "</pdate>" +
-							"</ad>\n");
+							"</ad>\0\n");
 			}
 			out.close();
 		} catch (IOException e) {
