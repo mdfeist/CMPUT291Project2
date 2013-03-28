@@ -1,8 +1,5 @@
-import java.awt.List;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.sleepycat.db.*;
 
@@ -34,8 +31,8 @@ public class DatabaseManager {
 		// database configuration
 		DatabaseConfig dbConfig = new DatabaseConfig();
 
-		// dbConfig.setErrorStream(System.err);
-		// dbConfig.setErrorPrefix("MyDbs");
+		dbConfig.setErrorStream(System.err);
+		//dbConfig.setErrorPrefix("MyDbs");
 
 		dbConfig.setType(type);
 		dbConfig.setAllowCreate(false);
@@ -109,6 +106,7 @@ public class DatabaseManager {
 					String dataString = new String(data.getData());
 					
 					key = new DatabaseEntry(search.getBytes("UTF-8"));
+					data = new DatabaseEntry();
 					
 					Results results = new Results(keyString, dataString);
 					
@@ -131,11 +129,11 @@ public class DatabaseManager {
 		return ids;
 	}
 	
-	public void getPrices(int price, boolean greater) {
+	public void getPrices(String search, boolean greater) {
 		ArrayList<Results> ids = new ArrayList<Results>();
 		
-		String search = String.format("%09d", price);
-
+		search = String.format("%6s", search);
+		
 		try {
 			// DatabaseEntry key,data;
 			DatabaseEntry key = new DatabaseEntry(search.getBytes());
@@ -155,11 +153,13 @@ public class DatabaseManager {
 					String dataString = new String(data.getData());
 					
 					key = new DatabaseEntry(search.getBytes());
+					data = new DatabaseEntry();
 					
-					Results results = new Results(keyString, dataString);
-					
-					ids.add(results);
-					//System.out.println("Key | Data : " + keyString + " | " + dataString + "");
+					if (!keyString.equals(search)) {
+						Results results = new Results(keyString, dataString);
+						ids.add(results);
+						//System.out.println("Key | Data : " + keyString + " | " + dataString + "");
+					}
 					
 					if (greater)
 						retVal = std_cursor.getNext(key, data, LockMode.DEFAULT);
@@ -239,6 +239,7 @@ public class DatabaseManager {
 						break;
 					
 					key = new DatabaseEntry(search.getBytes("UTF-8"));
+					data = new DatabaseEntry();
 					
 					Results results = new Results(keyString, dataString);
 					
