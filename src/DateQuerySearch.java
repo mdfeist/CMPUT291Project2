@@ -40,9 +40,28 @@ public class DateQuerySearch extends QuerySearch {
 		
 		try {
 			retVal = cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
+			
+			OperationStatus retValLoop = retVal;
+			
+			if (date.getSearchFor() == QueryDate.SearchDate.UNTIL) {
+				if (cursor.count() > 0) {
+					while (retValLoop == OperationStatus.SUCCESS) {
+						String aKey = new String(key.getData());
+						
+						if (!aKey.equals(this.searchText))
+							break;
+						
+						key = buildKey(this.searchText);
+						data = buildData();
+						
+						retValLoop = cursor.getNextDup(key, data, LockMode.DEFAULT);
+					}
+				}
+			}
 		} catch (Exception ex) {
 			ex.getMessage();
 		}
+		
 		
 		return retVal;
 	}
@@ -68,15 +87,12 @@ public class DateQuerySearch extends QuerySearch {
 	public Integer getId(DatabaseEntry key, DatabaseEntry data) {
 		Integer id = null;
 		
-		String keyString = new String(key.getData());
 		String dataString = new String(data.getData());
 		
-		if (!keyString.equals(this.searchText)) {
-			try {
-				id = new Integer(dataString);
-			} catch (Exception ex) {
-				id = null;
-			}
+		try {
+			id = new Integer(dataString);
+		} catch (Exception ex) {
+			id = null;
 		}
 		
 		return id;
