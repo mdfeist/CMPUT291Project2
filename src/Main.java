@@ -74,7 +74,7 @@ public class Main {
 		DatabaseManager.getInstance().getPrices("16995", false);
 		System.out.println("\nSearch price > 16995");
 		DatabaseManager.getInstance().getPrices("16995", true);
-		*/
+		
 		System.out.println("\nQuery:");
 		QueryStatment q = new QueryStatment();
 		
@@ -105,13 +105,30 @@ public class Main {
 		DateQuerySearch dateSearch = new DateQuerySearch();
 		ids.retainAll(dateSearch.get(lowerD));
 		ids.retainAll(dateSearch.get(upperD));
-		
-		
-		for (Integer id : ids) {
-			//System.out.println(id);
-			QueryAdSearch adQuery = new QueryAdSearch();
-			Ad ad = adQuery.getAd(id);
-			ad.print();
+		*/
+		boolean run = true;
+		while (run) {
+			System.out.println("Enter Query:");
+			String input = Keyboard.getString();
+			
+			if (input == null) {
+				System.err.println("ERROR: Keyboard input was null");
+				return;
+			}
+			
+			if (input.equals("q")) {
+				return;
+			}
+			
+			QueryStatment query = QueryStatment.createQuery(input);
+			Set<Integer> ids = query.execute();
+			
+			for (Integer id : ids) {
+				//System.out.println(id);
+				QueryAdSearch adQuery = new QueryAdSearch();
+				Ad ad = adQuery.getAd(id);
+				ad.print();
+			}
 		}
 		
 		// End Time
