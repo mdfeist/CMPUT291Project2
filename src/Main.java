@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.Date;
+import java.util.Set;
 
 
 public class Main {
@@ -24,7 +25,7 @@ public class Main {
 			exitCode = process.waitFor();
 			System.out.println("Process data returned: " + exitCode);
 		} catch (IOException e) {
-			System.out.println("Error: When creating new data file");
+			System.err.println("Error: When creating new data file");
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -32,7 +33,11 @@ public class Main {
 		
 		// Parse XML file
 		XMLParser xml = new XMLParser();
-		xml.parse("Data10.xml");
+		boolean err = xml.parseFile("Data10k.xml");
+		
+		if (!err) {
+			return;
+		}
 		
 		// Sort Files and Build Indexes
 		try {
@@ -42,7 +47,7 @@ public class Main {
 			System.out.println("Process Build Index returned: " + exitCode);
 			
 		} catch (IOException e) {
-			System.out.println("Error: Sort");
+			System.err.println("ERROR: Unable to execute BuildScript.sh");
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -50,6 +55,7 @@ public class Main {
 		
 		// Tests
 		//DatabaseManager.getInstance().test();
+		/*
 		System.out.println("\nSearch 4runner in terms tile");
 		DatabaseManager.getInstance().getTerms("t-4runner");
 		System.out.println("\nSearch 4runner in terms body");
@@ -68,6 +74,45 @@ public class Main {
 		DatabaseManager.getInstance().getPrices("16995", false);
 		System.out.println("\nSearch price > 16995");
 		DatabaseManager.getInstance().getPrices("16995", true);
+		*/
+		System.out.println("\nQuery:");
+		QueryStatment q = new QueryStatment();
+		
+		QueryDate lowerD = new QueryDate("2012/05/08", QueryDate.SearchDate.SINCE);
+		QueryDate upperD = new QueryDate("2013/01/07", QueryDate.SearchDate.UNTIL);
+		
+		q.addDate(lowerD);
+		q.addDate(upperD);
+		
+		q.printDate();
+		
+		QueryPrice lowerP = new QueryPrice(new Integer(0), true);
+		QueryPrice qreaterP = new QueryPrice(new Integer(2000), false);
+		
+		q.addPrice(lowerP);
+		q.addPrice(qreaterP);
+		
+		q.printPrice();
+		
+		QueryTerm t = new QueryTerm("great%");
+		TermQuerySearch termSearch = new TermQuerySearch();
+		Set<Integer> ids = termSearch.get(t);
+		
+		PriceQuerySearch priceSearch = new PriceQuerySearch();
+		ids.retainAll(priceSearch.get(lowerP));
+		ids.retainAll(priceSearch.get(qreaterP));
+		
+		DateQuerySearch dateSearch = new DateQuerySearch();
+		ids.retainAll(dateSearch.get(lowerD));
+		ids.retainAll(dateSearch.get(upperD));
+		
+		
+		for (Integer id : ids) {
+			//System.out.println(id);
+			QueryAdSearch adQuery = new QueryAdSearch();
+			Ad ad = adQuery.getAd(id);
+			ad.print();
+		}
 		
 		// End Time
 		long lEndTime = new Date().getTime();

@@ -67,4 +67,40 @@ public class Ad {
 	public void setDate(String pdate) {
 		this.pdate = pdate;
 	}
+	
+	public void print() {
+		String price = String.format("%d", this.price);
+		
+		if (this.price < 0) {
+			price = "null";
+		}
+		
+		String title = this.title;
+		if (this.title.length() > 20)
+			title = this.title.substring(0, 17) + "...";
+		
+		String body = this.body;
+		if (this.body.length() > 40)
+			body = this.body.substring(0, 37) + "...";
+		
+		String out =  String.format("%7d | %20s | %40s | %8s | %s", 
+									this.id, 
+									title,
+									body,
+									price,
+									this.pdate);
+		
+		System.out.println(out);
+	}
+	
+	public String toString() {
+		String price = String.format("%d", this.price);
+
+		if (this.price < 0) {
+			price = "null";
+		}
+
+		return String.format("%d\t%s\t%s\t%s\t%s\n", this.id,
+				this.title.replaceAll("\t", " "), this.body.replaceAll("\t", " "), price, this.pdate);
+	}
 }

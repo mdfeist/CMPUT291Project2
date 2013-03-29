@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import com.sleepycat.db.*;
 
 public class DatabaseManager {
-
+	
 	// Static Instance
 	private static DatabaseManager _instance = null;
 
@@ -54,6 +54,22 @@ public class DatabaseManager {
 	public Database getTerms() {
 		return terms;
 	}
+	
+	public Database getDates() {
+		return pdates;
+	}
+	
+	public Database getPrices() {
+		return prices;
+	}
+	
+	public Database getAds() {
+		return ads;
+	}
+	
+	//////////////////////////////////////
+	// REFACOTR REST OUT OF DATABASE
+	//////////////////////////////////////
 	
 	public void getDate(String search) {
 		ArrayList<Results>ids = get(pdates, search, false);
@@ -132,7 +148,7 @@ public class DatabaseManager {
 	public void getPrices(String search, boolean greater) {
 		ArrayList<Results> ids = new ArrayList<Results>();
 		
-		search = String.format("%6s", search);
+		search = String.format("%8s", search);
 		
 		try {
 			// DatabaseEntry key,data;
