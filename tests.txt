@@ -1,0 +1,50 @@
+Tests
+
+Terms 
+	- only alphanumeric and underscore characters
+	- upper case and lower case
+	- ignore terms of length 2 or less
+	- ignore &#number
+	- ignore &apos and &quote
+
+	- test non-alphanumeric chars
+
+
+Queries
+	- correct input eg. 
+    		t-camera
+    		b-camera
+    		camera
+    		t-camera%
+    		until 2013/03/13
+    		since 2013/03/13
+    		price < 20
+    		price > 20
+    		camera since 2013/03/10 until 2013/03/13 price < 40 price > 20
+
+	- partial matches (wildcard only at the end of a term)
+		- test wildcard at end
+		- test wildcard at beginning
+		- test wildcard in the middle
+
+	- matches are case insensitive
+		- search for different cases (start, end, and in between)
+	
+	- dates
+		- until
+		- since
+		- test that inclusive
+		- yyyy/mm/dd format
+
+	- price 
+		- <
+		- >
+		- spaces between price and <
+		- no spaces between price and >
+
+	- multiple
+		- spaces between conditions
+
+
+
+
