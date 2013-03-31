@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ads type="array">
+<ad><id>1</id><title>caMera</title><body> New in my ^apartment</body><price></price><pdate>2004/07/27</pdate></ad>
+<ad><id>2</id><title>new Truck</title><body></body><price>10</price><pdate>2011/01/11</pdate></ad>
+<ad><id>3</id><title>apartment</title><body>it is a bug8</body><price>20</price><pdate>2011/02/11</pdate></ad>
+<ad><id>4</id><title>ApART</title><body>brand new</body><price></price>30<pdate>2011/01/11</pdate></ad>
+<ad><id>5</id><title>&apos; book &apos;</title><body></body><price></price>160<pdate>2012/01/11</pdate></ad>
+<ad><id>6</id><title>caMera</title><body>big a+artment</body><price></price>40<pdate>2013/02/31</pdate></ad>
+<ad><id>7</id><title>truck a]{ &#29987;></title><body>&quot; ford vehicle &quot;</body><price></price><pdate>2010/01/11</pdate></ad>
+<ad><id>8</id><title>cam*ra</title><body>this is a good</body><price>50</price><pdate>2011/01/12</pdate></ad>
+<ad><id>9</id><title>apartment</title><body>came%ra</body><price></price>1<pdate>2011/01/11</pdate></ad>
+<ad><id>10</id><title>CAMERA</title><body>apples</body><price>0</price><pdate>2011/01/09</pdate></ad>
+</ads>
