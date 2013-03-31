@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
 
+///////////////////////////////
+// OLD CODE USE XML PARSER
+///////////////////////////////
+
 public class CreateDataFiles {
 
 	public static void createTerms(Collection<Ad> ads) {

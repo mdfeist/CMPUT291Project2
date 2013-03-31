@@ -48,13 +48,14 @@ public class DateQuerySearch extends QuerySearch {
 					while (retValLoop == OperationStatus.SUCCESS) {
 						String aKey = new String(key.getData());
 						
-						if (!aKey.equals(this.searchText))
+						if (!aKey.equals(this.searchText)) {
 							break;
-						
+						}
+
 						key = buildKey(this.searchText);
 						data = buildData();
 						
-						retValLoop = cursor.getNextDup(key, data, LockMode.DEFAULT);
+						retValLoop = cursor.getNext(key, data, LockMode.DEFAULT);
 					}
 				}
 			}

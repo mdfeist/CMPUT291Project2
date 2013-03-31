@@ -40,6 +40,11 @@ public class PriceQuerySearch extends QuerySearch {
 		
 		try {
 			retVal = cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
+			
+			if ((OperationStatus) retVal != OperationStatus.SUCCESS &&
+					!this.price.isGreaterThan()) {
+				retVal = cursor.getLast(key, data, LockMode.DEFAULT);
+			}
 		} catch (Exception ex) {
 			ex.getMessage();
 		}
@@ -70,6 +75,12 @@ public class PriceQuerySearch extends QuerySearch {
 		
 		String keyString = new String(key.getData());
 		String dataString = new String(data.getData());
+		
+		if (!price.isGreaterThan()) {
+			if (keyString.compareTo(this.searchText) > 0) {
+				return id;
+			}
+		}
 		
 		if (!keyString.equals(this.searchText)) {
 			try {

@@ -173,7 +173,7 @@ public class XMLParser {
 		}
 	}
 	
-	public boolean parseFile(String filename) {
+	public boolean parseFile(String filename, final int padding) {
 		if (filename.equals("")) {
 			System.out.println("No File");
 			return false;
@@ -238,12 +238,14 @@ public class XMLParser {
 
 							title = title.replaceAll("&quot;", " ");
 							title = title.replaceAll("&apos;", " ");
+							title = title.replaceAll("&#\\[0-9\\];", " ");
 
 							title = title.replaceAll("[^A-Za-z0-9_ ]", " ");
 							title = title.toLowerCase();
 
 							body = body.replaceAll("&quot;", " ");
 							body = body.replaceAll("&apos;", " ");
+							body = body.replaceAll("&#\\[0-9\\];", " ");
 
 							body = body.replaceAll("[^A-Za-z0-9_ ]", " ");
 							body = body.toLowerCase();
@@ -281,7 +283,7 @@ public class XMLParser {
 							int price = adObject.getPrice();
 
 							if (price >= 0) {
-								String pr = String.format("%8d", price);
+								String pr = String.format("%" + padding + "d", price);
 								
 								out_prices.write(pr
 										+ ":" + adObject.getId() + "\n");

@@ -217,6 +217,8 @@ public class QueryStatment {
 		if (position <= input.length())
 		{
 			String date = input.substring(position);
+			date = date.trim();
+			
 			if (date.length() >= 10) {
 				date = date.substring(0, 10);
 				
@@ -312,9 +314,6 @@ public class QueryStatment {
 			
 		}
 		
-		query.printPrice();
-		query.printDate();
-		
 		if (!(positionUntil == 0 || positionSince == 0 || firstPrice == 0)) {
 			int position = input.indexOf(' ');
 			String term = input;
@@ -323,7 +322,6 @@ public class QueryStatment {
 			
 			query.setTerm(new QueryTerm(term));
 			
-			System.out.println(term);
 		}
 		
 		return query;

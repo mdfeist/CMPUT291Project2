@@ -11,9 +11,6 @@ public class Main {
 
 		Process process = null;  
 		int exitCode;
-		
-		// Start Time
-		long lStartTime = new Date().getTime();
 
 		// Clean Files
 		try {
@@ -23,7 +20,7 @@ public class Main {
 
 			process = Runtime.getRuntime().exec("mkdir data");
 			exitCode = process.waitFor();
-			System.out.println("Process data returned: " + exitCode);
+			System.out.println("Process make data/ returned: " + exitCode);
 		} catch (IOException e) {
 			System.err.println("Error: When creating new data file");
 			e.printStackTrace();
@@ -31,9 +28,21 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		System.out.println("Enter xml file name (example file.xml):");
+		String xmlFile = Keyboard.getString();
+
+		if (xmlFile == null)
+		{
+			System.err.println("ERROR: Keyboard input was null");
+			return;
+		}
+		
+		// Start Time
+		long lStartTime = new Date().getTime();
+
 		// Parse XML file
 		XMLParser xml = new XMLParser();
-		boolean err = xml.parseFile("test_10.xml");
+		boolean err = xml.parseFile(xmlFile, 8);
 		
 		if (!err) {
 			return;
@@ -53,89 +62,45 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		// Tests
-		//DatabaseManager.getInstance().test();
-		/*
-		System.out.println("\nSearch 4runner in terms tile");
-		DatabaseManager.getInstance().getTerms("t-4runner");
-		System.out.println("\nSearch 4runner in terms body");
-		DatabaseManager.getInstance().getTerms("b-4runner");
-		System.out.println("\nSearch with in terms");
-		DatabaseManager.getInstance().getTermsBoth("with");
-		System.out.println("\nSearch apart% in terms");
-		DatabaseManager.getInstance().getTermsBoth("apart%");
-		System.out.println("\nSearch 2012/06/24 in pdates");
-		DatabaseManager.getInstance().getDate("2012/06/24");
-		System.out.println("\nSearch since 2012/06/24 in pdates");
-		DatabaseManager.getInstance().getDatesFrom("2012/06/24");
-		System.out.println("\nSearch until 2012/06/24 in pdates");
-		DatabaseManager.getInstance().getDatesTo("2012/06/24");
-		System.out.println("\nSearch price < 16995");
-		DatabaseManager.getInstance().getPrices("16995", false);
-		System.out.println("\nSearch price > 16995");
-		DatabaseManager.getInstance().getPrices("16995", true);
-		
-		System.out.println("\nQuery:");
-		QueryStatment q = new QueryStatment();
-		
-		QueryDate lowerD = new QueryDate("2012/05/08", QueryDate.SearchDate.SINCE);
-		QueryDate upperD = new QueryDate("2013/01/07", QueryDate.SearchDate.UNTIL);
-		
-		q.addDate(lowerD);
-		q.addDate(upperD);
-		
-		q.printDate();
-		
-		QueryPrice lowerP = new QueryPrice(new Integer(0), true);
-		QueryPrice qreaterP = new QueryPrice(new Integer(2000), false);
-		
-		q.addPrice(lowerP);
-		q.addPrice(qreaterP);
-		
-		q.printPrice();
-		
-		QueryTerm t = new QueryTerm("great%");
-		TermQuerySearch termSearch = new TermQuerySearch();
-		Set<Integer> ids = termSearch.get(t);
-		
-		PriceQuerySearch priceSearch = new PriceQuerySearch();
-		ids.retainAll(priceSearch.get(lowerP));
-		ids.retainAll(priceSearch.get(qreaterP));
-		
-		DateQuerySearch dateSearch = new DateQuerySearch();
-		ids.retainAll(dateSearch.get(lowerD));
-		ids.retainAll(dateSearch.get(upperD));
-		*/
-		boolean run = true;
-		while (run) {
-			System.out.println("Enter Query:");
-			String input = Keyboard.getString();
-			
-			if (input == null) {
-				System.err.println("ERROR: Keyboard input was null");
-				return;
-			}
-			
-			if (input.equals("q")) {
-				return;
-			}
-			
-			QueryStatment query = QueryStatment.createQuery(input);
-			Set<Integer> ids = query.execute();
-			
-			for (Integer id : ids) {
-				//System.out.println(id);
-				QueryAdSearch adQuery = new QueryAdSearch();
-				Ad ad = adQuery.getAd(id);
-				ad.print();
-			}
-		}
-		
 		// End Time
 		long lEndTime = new Date().getTime();
 
 		// Print elapsed time
 		System.out.println("Final Time: " + (lEndTime - lStartTime));
+		
+		boolean run = true;
+		while (run) {
+			System.out.println("Enter Query (exit to quit):");
+			String input = Keyboard.getString();
+			
+			if (input == null) {
+				System.err.println("ERROR: Keyboard input was null");
+				continue;
+			}
+			
+			if (input.equals("exit")) {
+				System.out.println("Exiting Program ...");
+				break;
+			}
+			
+			QueryStatment query = QueryStatment.createQuery(input);
+			Set<Integer> ids = query.execute();
+			
+			if (ids == null) {
+				System.err.println("ERROR: Invalide query");
+			} else {
+				for (Integer id : ids) {
+					//System.out.println(id);
+					QueryAdSearch adQuery = new QueryAdSearch();
+					Ad ad = adQuery.getAd(id);
+					ad.print();
+				}
+			}
+		}
+		
+		System.out.println("Closing Database ...");
+		DatabaseManager.getInstance().close();
+		System.out.println("Bye");
 	}
 
 	
