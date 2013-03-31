@@ -103,8 +103,10 @@ public class TermQuerySearch extends QuerySearch {
 		String keyString = new String(key.getData());
 		String dataString = new String(data.getData());
 		
-		if (!keyString.contains(this.searchText))
+		if (!keyString.contains(this.searchText)) {
 			this.forceEnd = true;
+			return null;
+		}
 		
 		Integer id = null;
 		

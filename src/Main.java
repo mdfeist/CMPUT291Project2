@@ -33,7 +33,7 @@ public class Main {
 		
 		// Parse XML file
 		XMLParser xml = new XMLParser();
-		boolean err = xml.parseFile("Data10k.xml");
+		boolean err = xml.parseFile("test_10.xml");
 		
 		if (!err) {
 			return;
