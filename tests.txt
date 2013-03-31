@@ -1,49 +1,50 @@
 Tests
 
 Terms 
-	- only alphanumeric and underscore characters
-	- upper case and lower case
-	- ignore terms of length 2 or less
-	- ignore &#number
-	- ignore &apos and &quote
+	- only alphanumeric and underscore characters	[DONE]
+	- upper case and lower case			[DONE]
+	- ignore terms of length 2 or less		[DONE]
+	- ignore &#number				[DONE]
+	- ignore &apos and &quote			[DONE]
 
-	- test non-alphanumeric chars
+	- test non-alphanumeric chars			[DONE]
 
 
 Queries
 	- correct input eg. 
-    		t-camera
-    		b-camera
-    		camera
-    		t-camera%
-    		until 2013/03/13
-    		since 2013/03/13
-    		price < 20
-    		price > 20
-    		camera since 2013/03/10 until 2013/03/13 price < 40 price > 20
+    		t-camera				[DONE]
+    		b-camera				[DONE]
+    		camera					[DONE]
+    		t-camera%				[DONE]
+    		until 2013/03/13			[DONE]
+    		since 2013/03/13			[DONE]
+    		price < 20				[DONE]
+    		price > 20				[DONE]
+    		camera since 2013/03/10 until 2013/03/13 price < 40 price > 20	[DONE]
 
 	- partial matches (wildcard only at the end of a term)
-		- test wildcard at end
-		- test wildcard at beginning
-		- test wildcard in the middle
+		- test wildcard at end			[DONE]
+		- test wildcard at beginning		[DONE]
+		- test wildcard in the middle		[DONE]
 
 	- matches are case insensitive
-		- search for different cases (start, end, and in between)
+		- search for different cases 		[DONE]
+		(start, end, and in between)
 	
 	- dates
-		- until
-		- since
-		- test that inclusive
-		- yyyy/mm/dd format
+		- until					[DONE]
+		- since					[DONE]
+		- test that inclusive			[DONE]
+		- yyyy/mm/dd format			[DONE]
 
 	- price 
-		- <
-		- >
-		- spaces between price and <
-		- no spaces between price and >
+		- <					[DONE]
+		- >					[DONE]
+		- spaces between price and <		[DONE]
+		- no spaces between price and >		[DONE]
 
 	- multiple
-		- spaces between conditions
+		- spaces between conditions		[DONE]
 
 
 
