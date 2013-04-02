@@ -2,6 +2,13 @@ import java.io.FileNotFoundException;
 
 import com.sleepycat.db.*;
 
+/**
+ * Handles the databases. Also has simple tests
+ * where the data from the database is printed.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class DatabaseManager {
 	
 	// Static Instance

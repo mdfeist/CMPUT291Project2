@@ -6,7 +6,13 @@ import com.sleepycat.db.Database;
 import com.sleepycat.db.DatabaseEntry;
 import com.sleepycat.db.OperationStatus;
 
-
+/**
+ * Abstract class to handle a query. Designed
+ * to search a database for a particular key.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public abstract class QuerySearch {
 
 	public QuerySearch() {}

@@ -1,4 +1,10 @@
-
+/**
+ * Holds information for a price query. Includes price
+ * and whether to search greater than or less than.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class QueryPrice {
 
 	private Integer price;

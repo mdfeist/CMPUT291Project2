@@ -1,3 +1,9 @@
+/**
+ * Holds information about an ad.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 
 public class Ad {
 	private int id;

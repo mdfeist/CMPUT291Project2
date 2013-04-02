@@ -1,3 +1,11 @@
+/**
+ * Holds information for a term query. Includes the
+ * search term, what field to search (TITLE, BODY, or BOTH),
+ * and if there is a wildcard.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class QueryTerm {
 
 	public static enum TermField {TITLE, BODY, BOTH};

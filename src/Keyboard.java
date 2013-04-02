@@ -2,7 +2,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
+/**
+ * Allows users to get input from keyboard.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class Keyboard {
 	/**
 	 * Reads user input from the keyboard. 

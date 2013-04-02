@@ -7,7 +7,12 @@ import com.sleepycat.db.DatabaseEntry;
 import com.sleepycat.db.LockMode;
 import com.sleepycat.db.OperationStatus;
 
-
+/**
+ * Queries the database by date.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class DateQuerySearch extends QuerySearch {
 	
 	private QueryDate date;

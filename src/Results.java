@@ -1,4 +1,9 @@
-
+/**
+ * Holds the key and data from a search result.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class Results {
 	private String key;
 	private String data;

@@ -1,6 +1,14 @@
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * Creates a query from user input and is 
+ * able to execute the query to retrieve
+ * data.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class QueryStatment {
 	
 	private ArrayList<QueryTerm> terms;

@@ -16,6 +16,15 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+/**
+ * Parses an XML file. Builds text files from
+ * an XML file. Also able to parse a string
+ * in XML format to get information about an
+ * ad from the ads database.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class XMLParser {
 	private FileOutputStream fos_terms;
 	private OutputStreamWriter out_terms;

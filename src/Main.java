@@ -2,11 +2,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
 
-
+/**
+ * Main Program.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class Main {
-	/**
-	 * @param args
-	 */
+	
 	public static void main(String[] args) {
 
 		Process process = null;  

@@ -1,4 +1,10 @@
-
+/**
+ * Holds information for a date query. Includes date
+ * and until/since argument.
+ * 
+ * @author Michael Feist and George Coomber
+ *
+ */
 public class QueryDate {
 	
 	public static enum SearchDate {UNTIL, SINCE, ON}
