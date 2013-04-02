@@ -80,10 +80,10 @@ public class Ad {
 			title = this.title.substring(0, 17) + "...";
 		
 		String body = this.body;
-		if (this.body.length() > 40)
-			body = this.body.substring(0, 37) + "...";
+		if (this.body.length() > 22)
+			body = this.body.substring(0, 22) + "...";
 		
-		String out =  String.format("%7d | %20s | %40s | %8s | %s", 
+		String out =  String.format("%7d | %20s | %25s | %8s | %s", 
 									this.id, 
 									title,
 									body,

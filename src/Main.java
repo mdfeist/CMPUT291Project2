@@ -88,7 +88,7 @@ public class Main {
 			
 			if (ids == null) {
 				System.err.println("ERROR: Invalid query");
-			} else {
+			} else {	
 				for (Integer id : ids) {
 					//System.out.println(id);
 					QueryAdSearch adQuery = new QueryAdSearch();
