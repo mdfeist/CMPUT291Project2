@@ -1,0 +1,47 @@
+<project default="build">
+	<property name="src.dir"     		value="src"/>
+
+    <property name="build.dir"   		value="build"/>
+    <property name="classes.dir" 		value="${build.dir}/bin"/>
+    <property name="jar.dir"     		value="${build.dir}"/>
+
+	<property name="java.lib.dir" 		value="/usr/share/java"/>
+
+	<property name="main-class"  		value="Main"/>
+
+ 	<path id="classpath">
+		<fileset dir="${java.lib.dir}" includes="db.jar"/>
+        <fileset dir="${java.lib.dir}" includes="commons-lang.jar"/>
+    </path>
+
+	<target name="clean">
+		<delete file="runScript.sh"/>
+        <delete dir="${build.dir}"/>
+    </target>
+
+  <target name="compile">
+		<mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" />
+    </target>
+
+  <target name="jar" depends="compile">
+   	 	<mkdir dir="${jar.dir}"/>
+
+        <jar destfile="${jar.dir}/Project.jar" basedir="${classes.dir}" update="true">
+			<zipgroupfileset dir="${java.lib.dir}" includes="db.jar"/>
+			<zipgroupfileset dir="${java.lib.dir}" includes="commons-lang.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+	</target>
+
+  <target name="build" depends="compile,jar">
+		<echo file="runScript.sh">
+			java -jar build/Project.jar
+		</echo>
+	</target>
+
+
+</project>
