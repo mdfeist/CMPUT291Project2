@@ -42,7 +42,7 @@ public class Main {
 
 		// Parse XML file
 		XMLParser xml = new XMLParser();
-		boolean err = xml.parseFile(xmlFile, 8);
+		boolean err = xml.parseFile(xmlFile);
 		
 		if (!err) {
 			return;

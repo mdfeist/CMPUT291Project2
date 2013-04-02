@@ -27,11 +27,14 @@ public abstract class QuerySearch {
 			Cursor cursor = db.openCursor(null, null);
 			
 			if (cursor == null) {
-				System.err.println("ERROR: QuerySearch: unable to create cursor");
 				return ids;
 			}
 			
 			OperationStatus retVal = first(cursor, key, data);
+			
+			if((OperationStatus) retVal != OperationStatus.SUCCESS) {
+				return ids;
+			}
 			
 			if (cursor.count() > 0) {
 				while (retVal == OperationStatus.SUCCESS) {

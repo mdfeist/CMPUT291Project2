@@ -41,21 +41,26 @@ public class DateQuerySearch extends QuerySearch {
 		try {
 			retVal = cursor.getSearchKeyRange(key, data, LockMode.DEFAULT);
 			
-			OperationStatus retValLoop = retVal;
-			
-			if (date.getSearchFor() == QueryDate.SearchDate.UNTIL) {
-				if (cursor.count() > 0) {
-					while (retValLoop == OperationStatus.SUCCESS) {
-						String aKey = new String(key.getData());
-						
-						if (!aKey.equals(this.searchText)) {
-							break;
+			if ((OperationStatus) retVal != OperationStatus.SUCCESS &&
+					this.date.getSearchFor() == QueryDate.SearchDate.UNTIL) {
+				retVal = cursor.getLast(key, data, LockMode.DEFAULT);
+			} else {
+				OperationStatus retValLoop = retVal;
+				
+				if (date.getSearchFor() == QueryDate.SearchDate.UNTIL) {
+					if (cursor.count() > 0) {
+						while (retValLoop == OperationStatus.SUCCESS) {
+							String aKey = new String(key.getData());
+							
+							if (!aKey.equals(this.searchText)) {
+								break;
+							}
+	
+							key = buildKey(this.searchText);
+							data = buildData();
+							
+							retValLoop = cursor.getNext(key, data, LockMode.DEFAULT);
 						}
-
-						key = buildKey(this.searchText);
-						data = buildData();
-						
-						retValLoop = cursor.getNext(key, data, LockMode.DEFAULT);
 					}
 				}
 			}

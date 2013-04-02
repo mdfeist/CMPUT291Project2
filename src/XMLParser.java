@@ -173,7 +173,7 @@ public class XMLParser {
 		}
 	}
 	
-	public boolean parseFile(String filename, final int padding) {
+	public boolean parseFile(String filename) {
 		if (filename.equals("")) {
 			System.out.println("No File");
 			return false;
@@ -283,7 +283,7 @@ public class XMLParser {
 							int price = adObject.getPrice();
 
 							if (price >= 0) {
-								String pr = String.format("%" + padding + "d", price);
+								String pr = String.format("%8d", price);
 								
 								out_prices.write(pr
 										+ ":" + adObject.getId() + "\n");
