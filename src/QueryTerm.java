@@ -43,4 +43,21 @@ public class QueryTerm {
 	public boolean hasWildCard() {
 		return this.wildCard;
 	}
+	
+	public boolean equals(QueryTerm term) {
+		
+		if (!this.term.equals(term.term)) {
+			return false;
+		}
+		
+		if (this.field != term.getField()) {
+			return false;
+		}
+		
+		if (this.wildCard != term.hasWildCard()) {
+			return false;
+		}
+		
+		return true;
+	}
 }

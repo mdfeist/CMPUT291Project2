@@ -4,7 +4,6 @@ import java.util.HashSet;
 import com.sleepycat.db.Cursor;
 import com.sleepycat.db.Database;
 import com.sleepycat.db.DatabaseEntry;
-import com.sleepycat.db.LockMode;
 import com.sleepycat.db.OperationStatus;
 
 

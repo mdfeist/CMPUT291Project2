@@ -42,7 +42,7 @@ public class Main {
 
 		// Parse XML file
 		XMLParser xml = new XMLParser();
-		boolean err = xml.parseFile(xmlFile, 8);
+		boolean err = xml.parseFile(xmlFile);
 		
 		if (!err) {
 			return;
@@ -87,7 +87,7 @@ public class Main {
 			Set<Integer> ids = query.execute();
 			
 			if (ids == null) {
-				System.err.println("ERROR: Invalide query");
+				System.err.println("ERROR: Invalid query");
 			} else {
 				for (Integer id : ids) {
 					//System.out.println(id);

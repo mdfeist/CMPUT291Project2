@@ -1,23 +1,33 @@
+import java.util.ArrayList;
 import java.util.Set;
 
 public class QueryStatment {
 	
-	private QueryTerm term;
+	private ArrayList<QueryTerm> terms;
 	private QueryPrice[] prices;
 	private QueryDate[] dates;
 	
 	public QueryStatment() {
-		this.term = null;
+		this.terms = new ArrayList<QueryTerm>();
 		this.prices = new QueryPrice[2];
 		this.dates = new QueryDate[2];
 	}
 	
-	public void setTerm(QueryTerm term) {
-		this.term = term;
+	public QueryTerm addTerm(QueryTerm term) {
+		
+		for (QueryTerm t : terms) {
+			if (t.equals(term)) {
+				return t;
+			}
+		}
+		
+		this.terms.add(term);
+		
+		return term;
 	}
 	
-	public QueryTerm getTerm() {
-		return this.term;
+	public QueryTerm getTermAt(int index) {
+		return this.terms.get(index);
 	}
 	
 	public void addDate(QueryDate date) {
@@ -144,10 +154,15 @@ public class QueryStatment {
 	public Set<Integer> execute() {
 		Set<Integer> ids = null;
 		
-		if (this.term != null) {
+		if (this.terms != null) {
 			TermQuerySearch termSearch = new TermQuerySearch();
 			
-			ids = termSearch.get(this.term);
+			for (QueryTerm t : this.terms) {
+				if (ids == null)
+					ids = termSearch.get(t);
+				else
+					ids.retainAll(termSearch.get(t));
+			}
 		}
 		
 		QueryDate lowerDate = this.dates[0];
@@ -241,32 +256,81 @@ public class QueryStatment {
 		input = input.trim().toLowerCase();
 		int positionUntil = input.indexOf("until");
 		
-		if (positionUntil >= 0) {
+		String untilString = input;
+		
+		if (positionUntil >= 0)
+			input = input.substring(0, positionUntil);
+		
+		while (positionUntil >= 0) {
 			int position = positionUntil + "until".length() + 1;
-			QueryDate date = getDate(position, input, QueryDate.SearchDate.UNTIL);
+			QueryDate date = getDate(position, untilString, QueryDate.SearchDate.UNTIL);
 			
 			if (date != null) {
 				query.addDate(date);
+				
+				untilString = untilString.substring(position);
+				positionUntil = untilString.indexOf("until");
+				
+				int startRemove = untilString.indexOf(date.getDate()) + date.getDate().length();
+				
+				if (startRemove >= 0) {
+					if (positionUntil < 0) {
+						input += untilString.substring(startRemove);
+					} else {
+						input += untilString.substring(startRemove, positionUntil);
+					}
+				}
+				
+			} else {
+				System.err.println("ERROR: Invalid query failed at until");
+				return null;
 			}
 		}
 		
 		int positionSince = input.indexOf("since");
 		
-		if (positionSince >= 0) {
+		String sinceString = input;
+		
+		if (positionSince >= 0)
+			input = input.substring(0, positionSince);
+		
+		while (positionSince >= 0) {
 			int position = positionSince + "since".length() + 1;
-			QueryDate date = getDate(position, input, QueryDate.SearchDate.SINCE);
+			QueryDate date = getDate(position, sinceString, QueryDate.SearchDate.SINCE);
 			
 			if (date != null) {
 				query.addDate(date);
+				
+				sinceString = sinceString.substring(position);
+				positionSince = sinceString.indexOf("since");
+				
+				int startRemove = sinceString.indexOf(date.getDate()) + date.getDate().length();
+				
+				if (startRemove >= 0) {
+					if (positionSince < 0) {
+						input += sinceString.substring(startRemove);
+					} else {
+						input += sinceString.substring(startRemove, positionSince);
+					}
+				}
+				
+			}  else {
+				System.err.println("ERROR: Invalid query failed at since");
+				return null;
 			}
 		}
 		
 		int positionPrice = input.indexOf("price");
 		String priceString = input;
-		int firstPrice = positionPrice;
+		
+		if (positionPrice >= 0)
+			input = input.substring(0, positionPrice);
 		
 		while (positionPrice >= 0) {
 			int position = positionPrice + "price".length();
+			Integer priceValue = null;
+			
+			boolean err = false;
 			
 			if (position <= priceString.length())
 			{
@@ -294,8 +358,6 @@ public class QueryStatment {
 						price = price.substring(0, positionOfPrice);
 					}
 					
-					Integer priceValue = null;
-					
 					try {
 						priceValue = new Integer(price);
 					} catch (Exception ex) {
@@ -305,23 +367,50 @@ public class QueryStatment {
 					if (priceValue != null) {
 						QueryPrice qPrice = new QueryPrice(priceValue, greaterThan);
 						query.addPrice(qPrice);
+					} else {
+						err = true;
 					}
+				} else {
+					err = true;
 				}
+			} else {
+				err = true;
+			}
+			
+			if (err) {
+				System.err.println("ERROR: Invalid query failed at price");
+				return null;
 			}
 			
 			priceString = priceString.substring(position);
 			positionPrice = priceString.indexOf("price");
 			
+			if (priceValue != null) {
+				
+				int startRemove = priceString.indexOf(priceValue.toString()) + priceValue.toString().length();
+				
+				if (startRemove >= 0) {
+					if (positionPrice < 0) {
+						input += priceString.substring(startRemove);
+					} else {
+						input += priceString.substring(startRemove, positionPrice);
+					}
+				}
+			}
 		}
 		
-		if (!(positionUntil == 0 || positionSince == 0 || firstPrice == 0)) {
-			int position = input.indexOf(' ');
-			String term = input;
-			if (position > 0)
-				term = input.substring(0, position);
+		String[] termInput = input.split(" ");
+		
+		for (String str : termInput) {
+			str = str.trim();
 			
-			query.setTerm(new QueryTerm(term));
-			
+			if (str.length() >= 3 || str.equals("%")) {
+				query.addTerm(new QueryTerm(str));
+			} else {
+				if (str.length() > 0) {
+					System.err.println("ERROR: String to short " + str);
+				}
+			}
 		}
 		
 		return query;
